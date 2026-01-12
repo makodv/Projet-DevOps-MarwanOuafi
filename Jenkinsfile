@@ -44,6 +44,23 @@ pipeline {
 
     }
 
+ stage('Archive') {
+            steps {
+                archiveArtifacts artifacts: '**/*', fingerprint: true
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh '''
+                    docker rm -f devops-app || true
+                    docker build -t devops-app .
+                    docker run -d --name devops-app devops-app
+                '''
+            }
+        }
+    }
+  
+ 
        
 
-}
