@@ -15,36 +15,30 @@ pipeline {
 
         stage('Setup Python & venv') {
             steps {
-                dir('.') {
-                    sh '''
-                        set -e
-                        apt-get update
-                        apt-get install -y python3 python3-venv python3-pip
+                sh '''
+                    set -e
+                    apt-get update
+                    apt-get install -y python3 python3-venv python3-pip
 
-                        python3 -m venv venv
-                        . venv/bin/activate
+                    python3 -m venv venv
+                    . venv/bin/activate
 
-                        pip install --upgrade pip
-                        pip install -r requirements.txt
-                    '''
-                }
+                    pip install --upgrade pip
+                    pip install -r requirements.txt
+                '''
             }
         }
 
         stage('Run tests') {
             steps {
-                dir('.') {
-                    sh '''
-                        . venv/bin/activate
-                        pytest
-                    '''
-                }
+                sh '''
+                    . venv/bin/activate
+                    pytest
+                '''
             }
         }
 
-    }
-
- stage('Archive') {
+        stage('Archive') {
             steps {
                 archiveArtifacts artifacts: '**/*', fingerprint: true
             }
@@ -60,7 +54,6 @@ pipeline {
             }
         }
     }
-  
- 
-       
 
+    
+}
