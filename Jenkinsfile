@@ -1,4 +1,4 @@
-&²a q>Apipeline {
+pipeline {
     agent any
 
     options {
@@ -41,6 +41,8 @@
                 }
             }
         }
+
+    }
 
        
 
